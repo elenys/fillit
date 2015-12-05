@@ -18,58 +18,58 @@ void			exit_error(void)
 	exit(EXIT_FAILURE);
 }
 
-static int		parse_file(int fd, char **tab_tetra)
+static int		parse_file(int fd, int nb_tetra, t_tetra tab_tetra[])
 {
 	char		*line;
 	int			nb_line;
-	int			nb_tetra;
 	int			return_value;
 	t_tab_fct	*tab_fun_check;
 
 	line = 0;
 	nb_line = 0;
-	nb_tetra = 0;
 	return_value = 2;
 	tab_fun_check = init_tab_fct();
+	ft_putendl("Strarting parse piece");
 	while ((return_value = get_next_line(fd, &line)) > 0 && nb_tetra <= 26)
 	{
 		if (nb_line == 5)
 		{
+			ft_putendl("1 piece parsed");
 			nb_line = 0;
 			nb_tetra++;
 		}
-		tab_fun_check[nb_line](&line, (*tab_tetra[nb_tetra]).& matrice, nb_tetra, line);
+		tab_fun_check[nb_line](line, tab_tetra[nb_tetra], nb_tetra, nb_line);
 		nb_line++;
 	}
 	if (nb_line == 5 && return_value == 0) //a verifier pour les conditions
 		nb_tetra++;
-	else if (return_value < 0) /*verifier qu'il n'y a plus rien dans le buffer genre rv value > 0 et nb_tet = 26 */
+	else if (return_value < 0 || nb_tetra == 0) //verifier qu'il n'y a plus rien dans le buffer genre rv value > 0 et nb_tet = 26 
 		exit_error();
 	return (nb_tetra);
 }
 
-static int parser(char *file_name, t_tetra *tab_tetra)
+static int parser(char *file_name, t_tetra tab_tetra[])
 {
 	int			fd;
 	int			nb_tetra;
 
+	nb_tetra = 0;
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 		exit_error();
-	nb_tetra = parse_file(fd, tab_tetra);
+	nb_tetra = parse_file(fd, nb_tetra, tab_tetra);
 	return (nb_tetra);
 }
 
 int				main(int ac, char **av)
 {
 	int			nb_tetra;
-	t_tetra		tab_tetra[27];
+	t_tetra		tab_tetra[28];
 
 	if (ac == 2)
 	{
 		ft_putendl("parsing");
-		nb_tetra = parser(av[1], &tab_tetra);
-		ft_putnbr(nb_tetra);
+		nb_tetra = parser(av[1], tab_tetra);
 	}
 	else
 		exit_error();

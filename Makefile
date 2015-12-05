@@ -31,11 +31,11 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(SRC_O)
-	@gcc -o $(NAME) $(SRC_O) -L libft/ -lft
+	@clang -o $(NAME) $(SRC_O) -L libft/ -lft
 
 $(SRC_O): $(SRC_C)
 	@make -C libft/
-	@gcc $(FLAGS) -c $(SRC_C) -I $(DIR_H)
+	@clang $(FLAGS) -c $(SRC_C) -I $(DIR_H)
 	@mkdir -p $(DIR_O)
 	@mv $(FILE_O) $(DIR_O)
 

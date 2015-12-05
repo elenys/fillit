@@ -18,9 +18,11 @@
 
 # include <fcntl.h>
 
-typedef int t_tetra[3][3];
-typedef void (*t_tab_fct)(char *line, int ***matrice, int nb_tetra, int cur);
+typedef int t_tetra[4][4];
+typedef void (*t_tab_fct)(char *line, t_tetra matrice, int nb_tetra, int cur);
 
 void		exit_error(void);
+t_tab_fct	*init_tab_fct(void);
+
 
 #endif

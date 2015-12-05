@@ -33,7 +33,7 @@ H_DIR = ../incs/
 all: $(NAME)
 
 $(NAME):
-	@gcc -std=c99  $(FLAGS) -c $(SRC_C) -I $(H_DIR)
+	@clang -std=c99  $(FLAGS) -c $(SRC_C) -I $(H_DIR)
 	@ar rc $(NAME) $(SRC_C:.c=.o)
 	@ranlib $(NAME)
 
